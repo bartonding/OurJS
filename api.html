@@ -7,6 +7,15 @@
 <link rel="stylesheet" href="stylesheets/api.css">
 <script src="our.min.js"></script>
 <script src="components.dialog.js"></script>
+<script src="store.js"></script>
+<script>
+localStorage.setItem = function(key, value) {
+  store.set(key, value);
+};
+localStorage.getItem = function(key) {
+  store.get(key);
+};
+</script>
 <script src="scripts/data.js"></script>
 <script src="scripts/manifest.js"></script>
 <script src="scripts/document.js"></script>
