@@ -1,9 +1,10 @@
-document.on('domready', function() {
+execute(function($) {
   var $html = $(document.documentElement);
   var $content = $('#content');
   var indexColumns = {
-    left: $('#left_column'),
-    right: $('#right_column')
+    a: $('#column_a'),
+    b: $('#column_b'),
+    c: $('#column_c')
   };
   var $deatilsPanel = $('#details_container');
   var $details = $('#details');
@@ -80,25 +81,18 @@ document.on('domready', function() {
     };
 
 //--------------------------------------------------[getShortDescription]
-    var RE_BREAK = /.*(?=&#10;)|.*/;
     var getShortDescription = function(symbol) {
-      return symbol ? RE_BREAK.exec(symbol.description) : '-';
+      var shortDescription = '-';
+      if (symbol) {
+        var index = symbol.description.indexOf('<br>');
+        shortDescription = symbol.description.slice(0, index === -1 ? undefined : index);
+      }
+      return shortDescription;
     };
 
 //--------------------------------------------------[getDescription]
     var getDescription = function(symbol) {
       return '<blockquote>' + (symbol ? symbol.description : '-') + '</blockquote>';
-    };
-
-//--------------------------------------------------[getExample]
-    var getExample = function(symbol) {
-      return symbol && symbol.examples.length ?
-          symbol.examples.map(
-              function(example) {
-                return '<pre>' + example + '</pre>';
-              }
-          ).join('') :
-          '';
     };
 
 //--------------------------------------------------[getParameters]
@@ -123,6 +117,17 @@ document.on('domready', function() {
           '';
     };
 
+//--------------------------------------------------[getFires]
+    var getFires = function(symbol) {
+      return symbol && symbol.fires.length ?
+          '<dl class="event"><dt>触发事件：</dt><dd><table>' + symbol.fires.map(
+              function(event) {
+                return '<tr><td><dfn>' + event.name + '</dfn></td><td>' + event.description + '</td></tr>';
+              }
+          ).join('') + '</table></dd></dl>' :
+          '';
+    };
+
 //--------------------------------------------------[getRequires]
     var getRequires = function(symbol) {
       return symbol && symbol.requires.length ?
@@ -142,6 +147,17 @@ document.on('domready', function() {
 //--------------------------------------------------[getDeprecated]
     var getDeprecated = function(symbol) {
       return symbol && symbol.deprecated ? '<dl><dt>已过期：</dt><dd>' + symbol.deprecated + '</dd></dl>' : '';
+    };
+
+//--------------------------------------------------[getExample]
+    var getExample = function(symbol) {
+      return symbol && symbol.examples.length ?
+          '<dl><dt>示例：</dt><dd>' + symbol.examples.map(
+              function(example) {
+                return '<pre class="prettyprint">' + example + '</pre>';
+              }
+          ).join('') + '</dd></dl>' :
+          '';
     };
 
 //--------------------------------------------------[getSee]
@@ -170,14 +186,15 @@ document.on('domready', function() {
       if (!manifest[name]) {
         return;
       }
-      // 本类对象包含的内容。
-      var written = {
+      // 本类对象包含的内容分组。
+      var group = {
         constructor: '<h2>构造函数</h2>',
         methods: '<h2>方法</h2>',
         properties: '<h2>属性</h2>'
       };
       // 注解信息（可以作用于一类对象内的多个 API）。
       var comment = '';
+      var lastGroupName;
       manifest[name].forEach(function(name) {
         if (name.startsWith('<#>')) {
           comment = name.match(RE_COMMENT)[1];
@@ -188,12 +205,12 @@ document.on('domready', function() {
           // 语法和说明。
           $indexFieldset.append($('<dl' + (category ? ' class="' + category + '"' : '') + '><dt><a href="#' + name.toLowerCase() + '">' + getSyntax(symbol, name) + '</a></dt><dd>' + getShortDescription(symbol) + '</dd></dl>'));
           // 详细信息。
-          var title = symbol ? (symbol.isFunction ? (symbol.isConstructor ? 'constructor' : 'methods') : 'properties') : '';
-          if (written[title]) {
-            $detailsDiv.append($(written[title]));
-            delete written[title];
+          var groupName = symbol ? (symbol.isFunction ? (symbol.isConstructor ? 'constructor' : 'methods') : 'properties') : '';
+          if (groupName && groupName !== lastGroupName) {
+            $detailsDiv.append($(group[groupName]));
           }
-          $detailsDiv.append($('<div id="' + name.toLowerCase() + '" class="symbol">' + '<h3>' + (comment ? '<span class="comment' + ('ES5/ES6/HTML5/DOM3'.contains(comment) ? ' patch' : '') + '">' + comment + '</span>' : '') + '<span class="category">' + category + '</span>' + getType(symbol) + getSyntax(symbol, name) + '</h3>' + getDescription(symbol) + getExample(symbol) + getParameters(symbol) + getReturns(symbol) + getRequires(symbol) + getSince(symbol) + getDeprecated(symbol) + getSee(symbol) + '</div>'));
+          $detailsDiv.append($('<div id="' + name.toLowerCase() + '" class="symbol">' + '<h3>' + (comment ? '<span class="comment' + ('ES5/ES6/HTML5/DOM3'.contains(comment) ? ' patch' : '') + '">' + comment + '</span>' : '') + '<span class="category">' + category + '</span>' + getType(symbol) + getSyntax(symbol, name) + '</h3>' + getDescription(symbol) + getParameters(symbol) + getReturns(symbol) + getFires(symbol) + getRequires(symbol) + getSince(symbol) + getDeprecated(symbol) + getExample(symbol) + getSee(symbol) + '</div>'));
+          lastGroupName = groupName;
         }
       });
       $details.append($detailsDiv);
@@ -218,21 +235,26 @@ document.on('domready', function() {
         'cookie',
         'localStorage'
       ].forEach(function(name) {
-        buildDocument(name, 'left');
+        buildDocument(name, 'a');
       });
       [
         'window',
         'document',
-        'HTMLElement',
         'Element',
-        'Event',
+        'Event'
+      ].forEach(function(name) {
+        buildDocument(name, 'b');
+      });
+      [
+        'Component',
         'Request',
         'Animation',
         'components.Switcher',
         'components.TabPanel',
-        'components.Dialog'
+        'components.Dialog',
+        'components.Calendar'
       ].forEach(function(name) {
-        buildDocument(name, 'right');
+        buildDocument(name, 'c');
       });
     });
 
@@ -256,25 +278,27 @@ document.on('domready', function() {
     // 使用对话框实现。
     var deatilsPanel = new components.Dialog($deatilsPanel, {
       maskStyles: {background: 'black', opacity: .05},
-      pinnedOffsetX: pinnedOffsetX,
-      pinnedOffsetY: 0,
-      onOpen: function() {
-        // 按下 ESC 键或点击细节层外即关闭细节层。
-        $html.on('keydown.deatilsPanel mousedown.deatilsPanel', function(e) {
-          if (e.isMouseEvent && !$deatilsPanel.contains(e.target) || e.which === 27) {
-            detailsLayer.close();
-          }
+      offsetX: pinnedOffsetX,
+      offsetY: 0
+    })
+        .on('open',
+        function() {
+          // 按下 ESC 键或点击细节层外即关闭细节层。
+          $html.on('keydown.deatilsPanel mousedown.deatilsPanel', function(e) {
+            if (e.isMouseEvent && !$deatilsPanel.contains(e.target) || e.which === 27) {
+              detailsLayer.close();
+            }
+          });
+          // 调整窗口尺寸的同时调整细节层的尺寸。
+          window.on('resize.deatilsPanel', adjustDeatilsPanel);
+        })
+        .on('close',
+        function() {
+          $html.setStyle('overflow', '');
+          // 取消事件绑定。
+          $html.off('keydown.deatilsPanel mousedown.deatilsPanel');
+          window.off('resize.deatilsPanel');
         });
-        // 调整窗口尺寸的同时调整细节层的尺寸。
-        window.on('resize.deatilsPanel', adjustDeatilsPanel);
-      },
-      onClose: function() {
-        $html.setStyle('overflow', '');
-        // 取消事件绑定。
-        $html.off('keydown.deatilsPanel mousedown.deatilsPanel');
-        window.off('resize.deatilsPanel');
-      }
-    });
     // 打开/关闭细节层，包裹对话框的方法。
     var detailsPanelLeft;
     var detailsLayer = {
@@ -286,7 +310,7 @@ document.on('domready', function() {
           deatilsPanel.open();
           // 打开时的向左移动的效果。
           detailsPanelLeft = parseInt($deatilsPanel.getStyle('left'), 10);
-          $deatilsPanel.setStyles({left: detailsPanelLeft + 30}).animate({left: detailsPanelLeft}, {duration: 150, queueName: 'move'});
+          $deatilsPanel.setStyles({left: detailsPanelLeft + 30}).morph({left: detailsPanelLeft}, {duration: 150});
         }
       },
       close: function() {
@@ -294,7 +318,7 @@ document.on('domready', function() {
           this.isOpen = false;
           deatilsPanel.close();
           // 关闭时的向右移动的效果。
-          $deatilsPanel.animate({left: detailsPanelLeft + 15}, {transition: 'easeIn', duration: 150, queueName: 'move'});
+          $deatilsPanel.morph({left: detailsPanelLeft + 15}, {transition: 'easeIn', duration: 150});
         }
       },
       isOpen: false
@@ -314,13 +338,23 @@ document.on('domready', function() {
 
 //==================================================[本页应用]
   runApplication(function(listen, notify) {
+    // 输出文档。
     notify('reference.build');
 
+    // 点击 API 条目，进入细节页的对应位置。
     $content.on('click', function(e) {
       notify('details.show');
     }, function() {
       return this.nodeName === 'A' || this.getParent().nodeName === 'A';
     });
+
+    // 如果指定了 hash，则直达细节页的对应位置。
+    if (location.hash) {
+      notify('details.show');
+      setTimeout(function() {
+        location.hash = location.hash;
+      }, 0);
+    }
 
     // 是否在索引页显示短描述。
     function showShortDescription(show) {
@@ -337,6 +371,8 @@ document.on('domready', function() {
       $shortDescription.checked = true;
     }
 
+    // 代码高亮。
+    prettyPrint();
   });
 
-});
+}, true);

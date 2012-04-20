@@ -6,27 +6,28 @@ var manifest = {
     'Global.getNamespace',
     '<#>模块化',
     'Global.declareModule',
-    'Global.runApplication'
+    'Global.runApplication',
+    '<#>执行代码块',
+    'Global.execute'
   ],
   'Object': [
     '<#>ES5',
     'Object.keys',
     '<#>自定义扩展',
+    'Object.forEach',
     'Object.clone',
-    'Object.append',
-    'Object.update',
-    'Object.forEach'
+    'Object.append'
   ],
   'Array': [
     '<#>ES5',
     'Array.isArray',
+    'Array.prototype.indexOf',
+    'Array.prototype.lastIndexOf',
+    'Array.prototype.every',
+    'Array.prototype.some',
     'Array.prototype.forEach',
     'Array.prototype.map',
     'Array.prototype.filter',
-    'Array.prototype.every',
-    'Array.prototype.some',
-    'Array.prototype.indexOf',
-    'Array.prototype.lastIndexOf',
 //    'Array.prototype.reduce',
 //    'Array.prototype.reduceRight',
     '<#>自定义扩展',
@@ -117,8 +118,6 @@ var manifest = {
     'localStorage.clear'
   ],
   'window': [
-    '<#>获取元素',
-    'window.$',
     '<#>获取视口信息',
     'window.getClientSize',
     'window.getScrollSize',
@@ -140,15 +139,13 @@ var manifest = {
     'document.off',
     'document.fire'
   ],
-  'HTMLElement': [
-    '<#>HTML5',
-    'HTMLElement.prototype.innerText',
-    'HTMLElement.prototype.outerText',
-    'HTMLElement.prototype.outerHTML'
-  ],
   'Element': [
     '<#>扩展属性/方法',
     'Element.prototype',
+    '<#>HTML5',
+    'Element.prototype.innerText',
+    'Element.prototype.outerText',
+    'Element.prototype.outerHTML',
     '<#>查找元素',
     'Element.prototype.find',
     '<#>处理类',
@@ -192,11 +189,9 @@ var manifest = {
     'Element.prototype.off',
     'Element.prototype.fire',
     '<#>动画效果',
-    'Element.prototype.animate',
-    'Element.prototype.stopAnimate',
-    'Element.prototype.getAnimationQueue',
-    'Element.prototype.fadeIn',
-    'Element.prototype.fadeOut'
+    'Element.prototype.morph',
+    'Element.prototype.fade',
+    'Element.prototype.highlight'
   ],
   'Event': [
     'Event.prototype.originalEvent',
@@ -217,6 +212,8 @@ var manifest = {
     'Event.prototype.screenY',
     'Event.prototype.pageX',
     'Event.prototype.pageY',
+    'Event.prototype.offsetX',
+    'Event.prototype.offsetY',
     'Event.prototype.leftButton',
     'Event.prototype.middleButton',
     'Event.prototype.rightButton',
@@ -231,6 +228,12 @@ var manifest = {
     'Event.prototype.preventDefault',
     'Event.prototype.stopImmediatePropagation'
   ],
+  'Component': [
+    'Component',
+    'Component.prototype.on',
+    'Component.prototype.off',
+    'Component.prototype.fire'
+  ],
   'Request': [
     'Request',
     'Request.options',
@@ -239,20 +242,25 @@ var manifest = {
   ],
   'Animation': [
     'Animation',
-    'Animation.options',
+    'Animation.prototype.addClip',
     'Animation.prototype.play',
-    'Animation.prototype.stop'
+    'Animation.prototype.reverse',
+    'Animation.prototype.pause',
+    'Animation.prototype.stop',
+    'Fx.Base',
+    'Fx.Morph',
+    'Fx.Fade',
+    'Fx.Highlight'
   ],
   'components.Switcher': [
     'components.Switcher',
-    'components.Switcher.options',
-    'components.Switcher.prototype.activeIndex',
-    'components.Switcher.prototype.active'
+    'components.Switcher.prototype.active',
+    'components.Switcher.prototype.getActiveItem',
+    'components.Switcher.prototype.getActiveIndex'
   ],
   'components.TabPanel': [
     'components.TabPanel',
     'components.TabPanel.options',
-    'components.TabPanel.prototype.activeIndex',
     'components.TabPanel.prototype.active'
   ],
   'components.Dialog': [
@@ -261,5 +269,11 @@ var manifest = {
     'components.Dialog.prototype.open',
     'components.Dialog.prototype.close',
     'components.Dialog.prototype.adjust'
+  ],
+  'components.Calendar': [
+    'components.Calendar',
+    'components.Calendar.options',
+    'components.Calendar.prototype.getElement',
+    'components.Calendar.prototype.render'
   ]
 };

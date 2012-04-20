@@ -1,23 +1,25 @@
 /* --------------------------------------------------[Index] */
 #cutline { margin: 20px 20px 20px 150px; overflow: hidden; }
-#cutline ul { float: right; }
+#cutline ul { float: right; padding-left: 70px; }
 #cutline li { margin: 2px 0; font-size: 12px; }
 #cutline li.constructor,
 #cutline li.static,
 #cutline li.instance { list-style: none; padding-left: 2px; }
-#cutline li.option { list-style: none; padding-left: 100px; }
+#cutline li.option { list-style: none; }
 #cutline li.option input { vertical-align: text-bottom; }
 #cutline li.option label { margin-left: 2px; }
 #cutline li.option label:hover { color: #102197; }
 #content a:link,
 #content a:visited { color: #666; }
-#content .column { float: left; width: 370px; padding: 5px; cursor: default; }
-#content fieldset { display: block; margin-bottom: 5px; padding: 5px; border: 1px solid #a6aeb3; border-radius: 5px; }
+#content .column { float: left; width: 310px; padding: 5px; cursor: default; }
+#content fieldset { display: block; margin-bottom: 5px; padding: 5px; border: 1px solid #A6AEB3; border-radius: 5px; }
 #content fieldset:hover { border-color: gray; }
+/*
 #content fieldset:hover legend dfn { color: orangered; }
+*/
 #content legend { padding: 2px 5px; font-weight: bold; font-size: 14px; line-height: 14px; }
 #content legend dfn { color: steelblue; }
-#content h2 { margin: 0; border-bottom: 1px solid #d5dfe5; color: seagreen; font-weight: normal; font-size: 12px; }
+#content h2 { margin: 0; border-bottom: 1px solid #D5DFE5; color: seagreen; font-weight: normal; font-size: 12px; }
 #content dl { margin: 5px 0; padding-left: 2px; border-left: 2px solid white; font-size: 12px; color: #666; }
 #content dt { margin: 0; font-weight: normal; font-size: 12px; }
 #content .constructor { border-left: 2px solid red; }
@@ -33,8 +35,8 @@
 
 /* --------------------------------------------------[Details] */
 /* layers */
-#details_container { display: none; position: fixed; z-index: 20; background: white; border-left: 1px solid dimgray; box-shadow: 0 0 10px black; overflow: auto; }
-#details { width: 710px; padding: 40px 0 100px 20px; background: white; color: #333; font-size: 14px; }
+#details_container { display: none; position: fixed; z-index: 20; background: white; border-left: 1px solid dimgray; box-shadow: 0 0 10px black; overflow-x: hidden; overflow-y: auto; }
+#details { width: 900px; padding: 40px 0 100px 20px; background: white; color: #333; font-size: 14px; }
 #details_close { position: absolute; left: 0; top: 16px; width: 16px; height: 16px; background: url(../images/close.png) no-repeat 0 0; overflow: hidden; cursor: default; }
 #details_close:hover { background-position: -16px 0; }
 /* symbol */
@@ -50,10 +52,15 @@
 #details h3 kbd { margin-right: 5px; font-weight: normal; }
 /* description */
 #details blockquote { margin: 10px; }
-#details blockquote table { margin: 5px; border-collapse: collapse; }
-#details blockquote th { background: whitesmoke; }
+#details blockquote table,
+#details table table { margin: 5px; border-collapse: collapse; }
+#details table table tr:nth-child(even) { background: transparent; }
 #details blockquote th,
-#details blockquote td { padding: 2px 3px; border: 1px solid silver; }
+#details table table th { background: whitesmoke; }
+#details blockquote th,
+#details blockquote td,
+#details table table th,
+#details table table td { padding: 2px 3px; border: 1px solid silver; }
 #details kbd { font-style: italic; }
 #details cite { color: #333; }
 #details samp { color: gray; font-style: italic; }
@@ -61,12 +68,14 @@
 #details var { color: sienna; font-style: italic; }
 #details ul { list-style: circle; padding-left: 2em; }
 /* example */
-#details pre { margin: 10px; padding: 5px; border: 1px solid #f0fff0; border-left-width: 5px; background: #f8fff8; color: #333; white-space: pre-wrap; word-wrap: break-word; }
+#details pre { margin-bottom: 10px; padding: 5px; border: 1px solid #EEE8AA; border-radius: 2px; background: #FFFFE1; color: #333; white-space: pre-wrap; word-wrap: break-word; }
+#details blockquote pre { margin-left: 2em; border-color: #F0FFF0; border-radius: 0; background-color: #F8FFF8; }
 /* params deprecated since exceptions returns requires see*/
 #details dl { margin: 10px; }
 #details dt { font-weight: bold; }
 #details dd { padding-left: 2em; }
 #details dd table { border-collapse: collapse; }
-#details dd table tr:nth-child(even) { background: whitesmoke; }
-#details dd table td { padding: 2px 3px; vertical-align: top; }
-#details dd table td em { margin-left: 5px; padding: 0 2px; border-radius: 5px 0; background: gold; color: maroon; font: italic 10px Arial; -webkit-text-size-adjust: none; }
+#details dd tr:nth-child(even) { background: whitesmoke; }
+#details dd th,
+#details dd td { padding: 2px 3px; vertical-align: top; }
+#details dd td em { margin-left: 5px; padding: 0 2px; border-radius: 5px 0; background: gold; color: maroon; font: italic 10px Arial; -webkit-text-size-adjust: none; }
