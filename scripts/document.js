@@ -234,17 +234,19 @@ execute(function($) {
         'location',
         'cookie',
         'localStorage'
-      ].forEach(function(name) {
-        buildDocument(name, 'a');
-      });
+      ]
+          .forEach(function(name) {
+            buildDocument(name, 'a');
+          });
       [
         'window',
         'document',
         'Element',
         'Event'
-      ].forEach(function(name) {
-        buildDocument(name, 'b');
-      });
+      ]
+          .forEach(function(name) {
+            buildDocument(name, 'b');
+          });
       [
         'Component',
         'Request',
@@ -253,9 +255,10 @@ execute(function($) {
         'components.TabPanel',
         'components.Dialog',
         'components.Calendar'
-      ].forEach(function(name) {
-        buildDocument(name, 'c');
-      });
+      ]
+          .forEach(function(name) {
+            buildDocument(name, 'c');
+          });
     });
 
   });
@@ -305,20 +308,25 @@ execute(function($) {
       open: function() {
         if (!this.isOpen) {
           this.isOpen = true;
+          var offsetY = window.getPageOffset().y;
           $html.setStyle('overflow', 'hidden');
           adjustDeatilsPanel();
           deatilsPanel.open();
+          window.scrollTo(0, offsetY);
           // 打开时的向左移动的效果。
           detailsPanelLeft = parseInt($deatilsPanel.getStyle('left'), 10);
-          $deatilsPanel.setStyles({left: detailsPanelLeft + 30}).morph({left: detailsPanelLeft}, {duration: 150});
+          $deatilsPanel.setStyles({left: detailsPanelLeft + 30, opacity: 0}).morph({left: detailsPanelLeft, opacity: 1}, {duration: 150});
         }
       },
       close: function() {
         if (this.isOpen) {
           this.isOpen = false;
-          deatilsPanel.close();
           // 关闭时的向右移动的效果。
-          $deatilsPanel.morph({left: detailsPanelLeft + 15}, {transition: 'easeIn', duration: 150});
+          $deatilsPanel.morph({left: detailsPanelLeft + 15, opacity: 0}, {transition: 'easeIn', duration: 150, callback: function() {
+            var offsetY = window.getPageOffset().y;
+            deatilsPanel.close();
+            window.scrollTo(0, offsetY);
+          }});
         }
       },
       isOpen: false
@@ -351,9 +359,10 @@ execute(function($) {
     // 如果指定了 hash，则直达细节页的对应位置。
     if (location.hash) {
       notify('details.show');
-      setTimeout(function() {
-        location.hash = location.hash;
-      }, 0);
+      var $target = document.$(location.hash);
+      if ($target) {
+        $target.scrollIntoView();
+      }
     }
 
     // 是否在索引页显示短描述。
@@ -373,6 +382,7 @@ execute(function($) {
 
     // 代码高亮。
     prettyPrint();
+
   });
 
 }, true);

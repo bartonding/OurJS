@@ -60,7 +60,7 @@ var manifest = {
     'Number.isInteger',
     'Number.toInteger',
     '<#>自定义扩展',
-    'Number.prototype.format'
+    'Number.prototype.padZero'
   ],
   'Math': [
     '<#>自定义扩展',
@@ -89,7 +89,6 @@ var manifest = {
     'navigator.userAgentInfo.version',
     '<#>特性判断得到的结果(准确)',
     'navigator.inStandardsMode',
-    'navigator.isIE',
     'navigator.isIE9',
     'navigator.isIElt9',
     'navigator.isIE8',
@@ -102,10 +101,11 @@ var manifest = {
     'navigator.isOpera'
   ],
   'location': [
-    '<#>',
+    '<#>自定义扩展',
     'location.parameters'
   ],
   'cookie': [
+    '<#>自定义扩展',
     'cookie.set',
     'cookie.get',
     'cookie.remove'
@@ -132,17 +132,17 @@ var manifest = {
     'document.head',
     '<#>获取元素',
     'document.$',
-    '<#>常用方法',
-    'document.preloadImages',
     '<#>处理事件',
     'document.on',
     'document.off',
-    'document.fire'
+    'document.fire',
+    '<#>自定义扩展',
+    'document.preloadImages'
   ],
   'Element': [
     '<#>扩展属性/方法',
     'Element.prototype',
-    '<#>HTML5',
+    '<#>处理内容',
     'Element.prototype.innerText',
     'Element.prototype.outerText',
     'Element.prototype.outerHTML',
@@ -190,10 +190,12 @@ var manifest = {
     'Element.prototype.fire',
     '<#>动画效果',
     'Element.prototype.morph',
-    'Element.prototype.fade',
+    'Element.prototype.fadeIn',
+    'Element.prototype.fadeOut',
     'Element.prototype.highlight'
   ],
   'Event': [
+    '<#>自定义扩展',
     'Event.prototype.originalEvent',
     'Event.prototype.type',
     'Event.prototype.isMouseEvent',

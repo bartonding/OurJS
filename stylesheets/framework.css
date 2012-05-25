@@ -1,3 +1,4 @@
+/* Reset 和 Theme 部分与 common.css 中的同类内容基本一致 */
 /* --------------------------------------------------[Reset] */
 body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, form, fieldset, legend, button, input, textarea, th, td { margin: 0; padding: 0; }
 ul, ol { list-style: outside none; }
@@ -17,7 +18,7 @@ sub { bottom: -3px; }
 html { overflow-y: scroll; }
 body { background-color: #FFF; }
 
-/* 字体（在 reset 的基础上加大字号并加入微软雅黑） */
+/* 字体（在 reset 的基础上加大字号，调整英文字体顺序，并加入微软雅黑。） */
 body,
 small,
 sup,
@@ -41,7 +42,7 @@ a.link { padding-left: 16px; background: url(../images/link.gif) no-repeat left 
 
 /* 标题 */
 h1 { margin-bottom: 30px; font-size: 28px; text-align: center; }
-h2 { margin: 30px 0 20px; background: url(../images/title_bg.gif) no-repeat left bottom; font-size: 18px; }
+h2 { margin: 30px 0 20px; font-size: 18px; }
 h3 { margin: 20px 0 10px; font-size: 16px; }
 h4,
 h5,
@@ -63,34 +64,13 @@ ol ol { list-style-type: decimal; }
 blockquote { margin: 10px 0; padding: 0 10px; border: 1px dotted #888; background-image: url(../images/bg_comment.png); color: #333; font-size: 12px; }
 p { margin: 10px 0; }
 em { color: #333; font-style: italic; }
+sup { display: inline-block; top: 0; padding: 0 3px 3px; border-radius: 8px; background: #333; color: white; font-size: 9px; font-family: Verdana, Arial, Helvetica, sans-serif; line-height: 1; vertical-align: top; -webkit-text-size-adjust: none; }
 p.referral { margin: 10px 0 0; }
 p.comment { margin: 0 0 10px; color: #666; font-size: 12px; }
 
-/* 容器 */
-.container { overflow: hidden; *zoom: 1; }
-
 /* --------------------------------------------------[Layout] */
-/* 页头 */
-#header { min-width: 1220px; height: 70px; padding-bottom: 1px; border-bottom: 1px solid #0C97C2; background: url(../images/header_bg.png) no-repeat; }
-#logo { visibility: hidden; float: left; width: 320px; height: 70px; margin: 0; }
-#menu { float: left; list-style: outside none; margin-top: 38px; padding: 0; -width: 900px; -margin-right: -900px; }
-#menu li { float: left; height: 32px; }
-#menu li a { display: block; padding: 0 20px; background: url(../images/menu_split_line.gif) no-repeat; color: black; font: bold 14px/20px 'Microsoft Yahei'; text-decoration: none; }
-#menu li.first a { background: none; }
-#menu li a:hover,
-#menu li.current a { color: #BB0A00; }
-#menu li.current { background: url(../images/menu_current.gif) no-repeat center bottom; color: #BB0A00; }
-#submenu { position: absolute; left: 40px; top: 100px; list-style: outside none; width: 200px; margin-top: 10px; padding: 0; }
-#submenu li a { display: block; height: 35px; padding-left: 15px; border-bottom: 1px dotted gainsboro; color: #333; font: 14px/35px "Microsoft Yahei"; text-decoration: none; }
-#submenu li a:hover { color: #BB0A00; }
-#submenu li.current a { background-color: #F3F3F3; color: #BB0A00; }
-
 /* 内容 */
-#content { padding-bottom: 100px; color: #333; font-size: 14px; }
-#content { width: 1200px; min-height: 600px; padding: 40px 0 40px 20px; overflow: hidden; -height: 600px; -overflow: visible; }
-#content.shrink { width: 960px; margin-left: 240px; }
-#content .include_error { height: 500px; padding-top: 200px; color: crimson; font-weight: bold; font-size: 14px; text-align: center; }
+#content { width: 960px; margin: 0 auto; padding: 40px 20px 100px; overflow: hidden; color: #333; font-size: 14px; }
 
-/* 页脚 */
-#footer { clear: both; min-width: 1070px; height: 30px; padding: 13px 0 7px 150px; border-top: 1px solid gainsboro; overflow: hidden; background: #F3F3F3 url(../images/footer_logo.png) no-repeat 40px 10px; color: #666; }
-#footer span { font-size: 12px; line-height: 30px; }
+/* 代码 */
+pre { padding: 5px; border: 1px solid #f0fff0; border-left-width: 5px; background: #f8fff8; color: #333; white-space: pre-wrap; word-wrap: break-word; }
