@@ -1,0 +1,76 @@
+/* Reset 和 Theme 部分与 common.css 中的同类内容基本一致 */
+/* --------------------------------------------------[Reset] */
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, form, fieldset, legend, button, input, textarea, th, td { margin: 0; padding: 0; }
+ul, ol { list-style: outside none; }
+fieldset, img { border: 0; }
+table { border-collapse: collapse; border-spacing: 0; }
+body, small, sup, sub, button, input, textarea, select { font: 12px/1 Arial, Helvetica, Verdana, SimSun, sans-serif; }
+body { line-height: 1.5; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var { font-style: normal; }
+code, kbd, pre, samp { font-family: Consolas, "Lucida Console", Courier, SimSun, monospace; }
+sup, sub { position: relative; vertical-align: baseline; }
+sup { top: -3px; }
+sub { bottom: -3px; }
+
+/* --------------------------------------------------[Theme] */
+/* 视口 */
+html { overflow-y: scroll; }
+body { background-color: #FFF; }
+
+/* 字体（在 reset 的基础上加大字号，调整英文字体顺序，并加入微软雅黑。） */
+body,
+small,
+sup,
+sub,
+button,
+input,
+textarea,
+select { font-size: 14px; font-family: Verdana, Helvetica, Arial, "Microsoft YaHei", SimSun, sans-serif; }
+code,
+kbd,
+pre,
+samp { font-family: Consolas, "Lucida Console", Courier, "Microsoft YaHei", SimSun, monospace; }
+
+/* 链接 */
+a { text-decoration: none; }
+a:link { color: #102197; }
+a:visited { color: #396686; }
+a:hover { text-decoration: underline; }
+a:active { }
+a.link { padding-left: 16px; background: url(../images/link.gif) no-repeat left center; }
+
+/* 标题 */
+h1 { margin-bottom: 30px; font-size: 28px; text-align: center; }
+h2 { margin: 30px 0 20px; font-size: 18px; }
+h3 { margin: 20px 0 10px; font-size: 16px; }
+h4,
+h5,
+h6 { margin: 10px 0 5px; font-size: 14px; }
+h2.heading { padding-left: 20px; border-bottom: 1px solid #898989; background: url(../images/heading.gif) no-repeat left center; }
+
+/* 段落 */
+dl { margin: 10px 0; }
+dt { font-weight: bold; }
+dd { padding-left: 2em; }
+ul,
+ol { padding-left: 2em; }
+ul { list-style-type: square; }
+ol { list-style-type: decimal; }
+ul ul,
+ol ul { list-style-type: circle; }
+ul ol,
+ol ol { list-style-type: decimal; }
+blockquote { margin: 10px 0; padding: 0 10px; border: 1px dotted #888; background-image: url(../images/bg_comment.png); color: #333; font-size: 12px; }
+p { margin: 10px 0; }
+em { color: #333; font-style: italic; }
+sup { display: inline-block; top: 0; padding: 0 3px 3px; border-radius: 8px; background: #333; color: white; font-size: 9px; font-family: Verdana, Arial, Helvetica, sans-serif; line-height: 1; vertical-align: top; -webkit-text-size-adjust: none; }
+p.referral { margin: 10px 0 0; }
+p.comment { margin: 0 0 10px; color: #666; font-size: 12px; }
+
+/* --------------------------------------------------[Layout] */
+/* 内容 */
+#content { width: 960px; margin: 0 auto; padding: 40px 20px 100px; overflow: hidden; color: #333; font-size: 14px; }
+
+/* 代码 */
+pre { padding: 5px; border: 1px solid #f0fff0; border-left-width: 5px; background: #f8fff8; color: #333; white-space: pre-wrap; word-wrap: break-word; }

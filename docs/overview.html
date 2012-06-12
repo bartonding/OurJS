@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>OurJS Overview</title>
+<link rel="stylesheet" href="/stylesheets/common.css">
+<link rel="stylesheet" href="stylesheets/framework.css">
+<script src="../our.js"></script>
+<script src="/scripts/common.js"></script>
+<style>
+.example { list-style-type: circle; padding: 5px 5px 5px 2em; border: 1px solid #dcdcdc; border-radius: 5px; background: #f5f5f5; }
+.example li { margin: 15px 0; }
+.example p { margin: 5px 0; }
+.example code { color: sienna; }
+pre span,
+code span { border: 1px solid #9acd32; background: #f8fff8; }
+</style>
+</head>
+<body>
+<div id="content">
+  <h1>OurJS 概述</h1>
+
+  <h2>要求</h2>
+  <p>OurJS 是一个适用于 WEB 应用开发的 JavaScript 快速开发框架，使用 OurJS 的开发者只需要有 JavaScript 和 DOM 的一些基础知识<sup>1</sup>，即可编写出兼容各主流浏览器（指 IE6 IE7 IE8 IE9 Firefox Chrome Safari Opera 以及其他使用 Trident 和 WebKit 内核的浏览器）的 WEB 应用。</p>
+  <p>OurJS 要求浏览器运行在“标准模式”下<sup>2</sup>，当浏览器工作在非标准模式下时，开发者将收到一条警告信息。</p>
+  <p>OurJS 具备完善的功能，也提供了基于组件形式的扩展，因此能够解决大部分需求。<br>当必须引入其他的类库以满足特定需求时，要注意一点：OurJS 使用了侵入式设计<sup>3</sup>，因此只能和其他非侵入式设计的类库共存<sup>4</sup>。</p>
+  <ol class="comment">
+    <li>开发者要了解 JS 的变量、数据类型、运算符、流程控制，以及 DOM 的一些常见的 API。</li>
+    <li>这是为了强制开发者编写符合标准规范的代码，以获得更好的兼容性，并发挥浏览器的最大功效。</li>
+    <li>此处的“侵入式设计”是指通过扩展 JS 对象的原型来增加新的功能。使用这种方式可以提供可读性更好的、更接近原生语法的 API。</li>
+    <li>可以和 jQuery 共存。</li>
+  </ol>
+
+  <h2>特点</h2>
+  <p>
+    与其他 JavaScript 框架（类库）相比，OurJS 要更加<strong>简单</strong><sup>1</sup>，更易于理解和使用。<br>
+    使 OurJS 变得“简单”的，是以下几个特点：
+  </p>
+
+  <h3>语法自然 —— 提供向标准靠拢<sup>2</sup>的、语义明确<sup>3</sup>的 API。</h3>
+  <ul>
+    <li>
+      <p>
+        对于一些在新的规范（草案）中定义的，或已成为事实标准的特性，在尚未支持的浏览器上通过技术手段予以补缺。<br>
+        这些 API 的语法是最自然的，使用它们时，开发者像面对最新的浏览器一样写代码，完全感觉不到 OurJS 的存在。<br>
+        举例如下：
+      </p>
+      <ul class="example">
+        <li>
+          <p><code>anArray.<span>forEach</span>(function(item) {...});</code></p>
+          <p class="comment">Array 对象的 forEach 方法是 ECMAScript 5 引入的，本来只有在较新版本的浏览器中才能使用，但现在可以放心使用了。</p>
+        </li>
+        <li>
+          <p><code>if (aString.<span>startsWith</span>('ex-') {...}</code></p>
+          <p class="comment">ECMAScript 6 (Harmony) 中的提案：检查字符串是否以指定的子串开始。这个方法很实用，有助于提高代码的可读性。</p>
+        </li>
+        <li>
+          <p><code><span>localStorage.setItem</span>('data', <span>JSON.stringify</span>(userData));</code></p>
+          <p class="comment">HTML5 的 localStorage 对象和 ECMAScript 5 的 JSON 对象原本在 IE6 IE7 中是不支持的，但现在可以放心使用了。</p>
+        </li>
+        <li>
+          <p><code><span>Element.prototype</span>.newMethod = function() {...};</code></p>
+          <p class="comment">IE6 IE7 本来没有 Element 构造函数，但现在可以通过扩充 Element.prototype 来为页面上的 DOM 元素添加新特性了。</p>
+        </li>
+        <li>
+          <p><code>element.<span>innerText</span> = 'new content';</code></p>
+          <p class="comment">元素的 innerText 特性是 IE 最先引入的，目前只有 Firefox 不支持，但现在可以放心使用了。</p>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p>
+        对于有规范支持但无法通过技术手段实现补缺的，或者无规范支持仅为方便使用而提供的特性，以扩展的方式提供。<br>
+        这些扩展的 API 语义明确，容易记忆，具备“自注释”的特性，力求和原生 API 的语法一样自然。<br>
+        举例如下：
+      </p>
+      <ul class="example">
+        <li>
+          <p><code>element.<span>setStyles({position: 'fixed', right: 0, bottom: 0})</span>;</code></p>
+          <p class="comment">
+            IE6 并不支持 CSS2 引入的固定定位，但现在通过使用 element.setStyle/setStyles 方法，可以实现在各浏览器中的一致的表现，而使用 element.getStyle/getStyles，也将获得预期的返回值 'fixed'。<br>
+            值得注意的是，setStyles 是设置多个样式，而 setStyle 是设置一个样式，二者的用途不同、名称不同、参数也不同。
+          </p>
+        </li>
+        <li>
+          <p><code>element.<span>on</span>('click', function(e) {...});</code></p>
+          <p class="comment">IE6 IE7 IE8 的事件模型与其他浏览器的不同，但现在可以通过 element.on/off/fire 方法实在各浏览器通用的事件处理函数的绑定/解除绑定/触发了。</p>
+        </li>
+        <li>
+          <p><code>var nextElement = element.<span>getNext</span>();</code></p>
+          <p class="comment">要获取一个元素的下一个相邻元素，在 Element Traversal Specification 中推荐的、指定获取元素类型节点的 nextElementSibling 属性仅在较新的浏览器中才支持，在 IE6 IE7 IE8 中只能通过该元素的 nextSibling 属性获取，不过这需要进一步判断，因为得到的可能是一个文本节点，但现在可以在所有浏览器上通过调用元素的 getNext 方法而达到相同的目的了。</p>
+        </li>
+        <li>
+          <p><code>element.<span>addClass</span>('active').<span>putBefore</span>(anotherElement);</code></p>
+          <p class="comment">给元素添加一个类名，然后插入到另一个元素的前边。这个需求也可以使用其他无兼容性问题的途径来实现，扩展这两个方法仅是为了方便使用。</p>
+        </li>
+        <li>
+          <p><code>Array.<span>from</span>(element.getElementsByTagName('select')).forEach(function(item){...});</code></p>
+          <p class="comment">将一个 NodeList 对象（或其他任意数据类型）转化为数组，以便使用数组的方法进行操作。Array.from 目前尚无规范支持，是仅为方便使用而添加的属性。</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>风格一致 —— 只要掌握了部分用法，就可以轻易的推测出其他部分的用法。</h3>
+  <ul>
+    <li>
+      OurJS 扩展的功能都是通过 JavaScript 的原型机制实现的，即便对 DOM 元素的扩展也是如此（这里对 IE6 IE7 做了特殊处理），这样的好处是可以像调用一个对象的源生方法一样来调用它的扩展方法。<br>
+      也就是说，不用再担心分不清你正在操作的对象到底是源生对象还是包装对象了——OurJS 没有“包装对象”的概念。
+      <ul class="example">
+        <li>
+          <p class="comment">调用了扩展方法后，又想调用源生方法？没问题，按照直觉告诉你的方式，写下来就行了。</p>
+          <p><code>element.empty().scrollIntoView()</code></p>
+        </li>
+        <li>
+          <p class="comment">想获取地址栏中 Query String 的某个字段？首先想到 location 对象了吗？正是，这个方法就在 location 对象上提供。</p>
+          <p><code>location.parameters.id</code></p>
+        </li>
+        <li>
+          <p class="comment">想操作 cookie？为了保持一致的风格，OurJS 提供了一个 cookie 对象。</p>
+          <p><code>cookie.get('username')</code></p>
+        </li>
+      </ul>
+    </li>
+    <li>只有一个可选参数。</li>
+    <li><em>DOM 元素的事件处理。</em></li>
+    <li><em>组件的事件处理。</em></li>
+    <li><em>可重复使用的功能和一次性使用的功能。</em></li>
+  </ul>
+
+  <h3>功能完善 —— 提供粒度恰当<sup>5</sup>的功能和组件，可以通过灵活的配置和组合进行自由的设计。</h3>
+  <ul>
+    <li>
+      在扩充对象的功能方面，OurJS 提供比其他库提供了更实用、覆盖面更广的功能，而不仅仅在某个方面提供一堆生僻的扩展（如提供十个完全可以由其他方式代替、仅仅是少些了几个单词的对 String.prototype 的扩展）。<br>
+      一些相对复杂的功能也隐藏在简单的 API 之后，如 element.setStyle('position', 'fixed') 提供了 IE6 的固定定位支持，localStorage 对 IE6 IE7 提供的模拟等。
+    </li>
+    <li>
+      组件方面，OurJS 尽量提供可以灵活搭配的各种事件。<br>
+      组件包括“功能组件”和“UI 组件”两种，其中功能组件包含 Request 和 Animation 两个对象，UI 组件则可以根据情况进行扩展。
+    </li>
+    <li>面对复杂的需求，OurJS 提供了“模块 - 应用”机制来化繁为简：将可分离的业务逻辑拆分为多个模块，再通过应用将各模块连接起来。其中每个模块都是完全独立的，有利于协同开发和单元测试。</li>
+  </ul>
+
+  <ol class="comment">
+    <li>
+      此处所说的“简单”不是指功能单一，实际上，OurJS 的功能要超过一些常见的类库。<br>
+      简单是相对于复杂而言的，描述的是人们的感觉。<br>
+      通常，使用可预期的 API 自由的编程是更简单的。而一旦某个 API 让人感到意外或被束缚，就会令人困惑和厌烦，这样的事情如果一再发生，原本简单的事情也会觉得复杂。<br>
+    </li>
+  </ol>
+  <blockquote>
+    <p>"Everything should be made as simple as possible, but no simpler." -- Albert Einstein<br>
+      “任何事情都应该尽可能的做到简单，简单到极致。”—— 爱因斯坦
+    </p>
+  </blockquote>
+
+</div>
+</body>
+</html>
